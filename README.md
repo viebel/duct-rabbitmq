@@ -6,8 +6,8 @@ TODO [![Build Status](https://travis-ci.org/agrison/duct-mongodb.svg?branch=mast
 [Langohr][].
 
 [integrant]: https://github.com/weavejester/integrant
-[mongodb]: https://www.mongodb.com
-[langohr]: http://clojuremongodb.info
+[rabbitmql]: https://www.rabbitmq.com
+[langohr]: http://clojurerabbitmq.info
 
 ## Installation
 
