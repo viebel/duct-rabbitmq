@@ -7,7 +7,7 @@ TODO [![Build Status](https://travis-ci.org/agrison/duct-mongodb.svg?branch=mast
 
 [integrant]: https://github.com/weavejester/integrant
 [rabbitmql]: https://www.rabbitmq.com
-[langohr]: http://clojurerabbitmq.info
+[langohr]: https://www.eurosport.fr/
 
 ## Installation
 
@@ -50,7 +50,21 @@ on the settings.
 :my-prj.handler/handle-msg {}
 ```
 
-```clojure
+Note: You can optionally pass a duct logger. If you do so, a message will be logged for each queue subscriber, when it subscribes.
+
+```edn
+:duct.amqp.rabbitmq/langohr-consumers {:consumers [{:queue "my-queue"
+                                                    :declare-queue {:durable false
+                                                                    :exclusive false
+                                                                    :auto-delete true
+                                                                    :arguments {}}
+                                                     :handler #ig/ref :my-prj.handler/handle-msg}]
+                                       :connection #ig/ref :duct.amqp.rabbitmq/langohr
+                                       :logger #ig/reg :duct/logger}
+:my-prj.handler/handle-msg {}
+```
+
+```Clojure
 (defmethod ig/init-key :my-prj.handler/handle-msg [_ _]
   (fn  [ch {:keys [content-type delivery-tag type] :as meta} ^bytes payload]
     (println (format "[consumer] Received a message: %s, delivery tag: %d, content type: %s, type: %s" (String. payload "UTF-8") delivery-tag content-type type))))

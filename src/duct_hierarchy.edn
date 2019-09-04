@@ -1,0 +1,1 @@
+{:duct.amqp.rabbitmq.langohr/consumers [:duct/daemon]}
