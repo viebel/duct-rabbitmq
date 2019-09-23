@@ -1,13 +1,12 @@
-# Duct database.mongodb.monger
+# Duct RabbitMQ
 
-TODO [![Build Status](https://travis-ci.org/agrison/duct-mongodb.svg?branch=master)](https://travis-ci.org/agrison/duct-mongodb)
 
 [Integrant][] methods for connecting to a [RabbitMQ][] server via
 [Langohr][].
 
 [integrant]: https://github.com/weavejester/integrant
-[rabbitmql]: https://www.rabbitmq.com
-[langohr]: https://www.eurosport.fr/
+[rabbitmq]: https://www.rabbitmq.com
+[langohr]: http://clojurerabbitmq.info/
 
 ## Installation
 
@@ -70,7 +69,7 @@ Note: You can optionally pass a duct logger. If you do so, a message will be log
     (println (format "[consumer] Received a message: %s, delivery tag: %d, content type: %s, type: %s" (String. payload "UTF-8") delivery-tag content-type type))))
 ```
 
-Instead of `:connecion`, you can have `:connection-settings` like this:
+Instead of `:connection`, you can have `:connection-settings` like this:
 
 ```edn
 :duct.amqp.rabbitmq/langohr-consumers {:consumers [{:queue "my-queue"
@@ -100,12 +99,12 @@ The return value is a map whose keys are the name of the producers (left as stri
 
 [langohr.basic/publish]: http://reference.clojurerabbitmq.info/langohr.basic.html#var-publish
 
-``clojure
+```clojure
 (def publish (get-in system [:duct.amqp.rabbitmq/langohr-producers "my-producer" :publish-fn]))
 (publish "Hello!" {:content-type "text/plain" :type "greetings.hi"})
 ```
 
-Instead of `:connecion`, you can have `:connection-settings` like we showed in the `Consumers` section.
+Instead of `:connection`, you can have `:connection-settings` like we showed in the `Consumers` section.
 
 ## Example
 
