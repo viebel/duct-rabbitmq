@@ -1,4 +1,4 @@
-(defproject viebel/duct-rabbitmq "0.1.6"
+(defproject viebel/duct-rabbitmq "0.1.7"
   :description "Integrant methods for connecting to RabbitMq via Langohr"
   :url "https://github.com/agrison/duct-mongodb"
   :license {:name "Eclipse Public License"
