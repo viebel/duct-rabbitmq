@@ -13,10 +13,13 @@
 
 
 (defn- start-consumers [connection logger consumers]
-  (doall (for [{:keys [queue handler declare-queue]} consumers]
-           (let [ch (lch/open connection)]
-             (when declare-queue
-               (lq/declare ch queue declare-queue))
+  (doall (for [{:keys [queue handler declare-queue exchange]} consumers]
+           (let [ch (lch/open connection)
+                 queue (if declare-queue
+                         (lq/declare ch queue declare-queue)
+                         queue)]
+             (when exchange
+               (lq/bind ch (:queue queue) exchange))
              (lc/subscribe ch queue handler {})
              (when @logger
                (logger/log @logger :report ::starting-consumer {:queue queue
