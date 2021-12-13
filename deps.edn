@@ -1,0 +1,5 @@
+{:paths ["src"]
+ :deps {org.clojure/clojure {:mvn/version "1.9.0"}
+        duct/logger {:mvn/version "0.3.0"}
+        integrant {:mvn/version "0.6.3"}
+        com.novemberain/langohr {:mvn/version "5.1.0"}}}
