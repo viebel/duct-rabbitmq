@@ -13,14 +13,16 @@
 
 
 (defn- start-consumers [connection logger consumers]
-  (doall (for [{:keys [queue handler declare-queue exchange routing-key]} consumers]
+  (doall (for [{:keys [queue handler declare-queue exchange routing-keys]} consumers]
            (let [ch (lch/open connection)
                  queue (if declare-queue
                          (lq/declare ch queue declare-queue)
-                         queue)
-                 bind-args (if (and exchange routing-key) {:routing-key routing-key} {})]
+                         queue)]
              (when exchange
-               (lq/bind ch (:queue queue) exchange bind-args))
+               (if routing-keys
+                 (doseq [routing-key routing-keys]
+                   (lq/bind ch (:queue queue) exchange {:routing-key routing-key}))
+                 (lq/bind ch (:queue queue) exchange {})))
              (lc/subscribe ch queue handler {})
              (when @logger
                (logger/log @logger :report ::starting-consumer {:queue queue
